@@ -42,7 +42,7 @@ const PoItems = () => {
             }
           );
           console.log("API Response:", response.data[0]);
-          setPoItems(response.data[0]);
+          setPoItems(response.data);
         } else {
           setPoItems(po.lineItems);
         }
@@ -56,9 +56,7 @@ const PoItems = () => {
 
     const fetchEi = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/api/ei/get-ei"
-        );
+        const response = await axios.get("http://localhost:4000/api/ei/get-ei");
         console.log("Api get ei response:", response.data);
         setEiData(response.data); // Store EI data in the state
       } catch (error) {
@@ -72,8 +70,8 @@ const PoItems = () => {
 
   const handleSelectItem = (item) => {
     setSelectedItems((prev) =>
-      prev.some((selected) => selected.id === item.id)
-        ? prev.filter((selected) => selected.id !== item.id)
+      prev.some((selected) => selected.Ebelp === item.Ebelp)
+        ? prev.filter((selected) => selected.Ebelp !== item.Ebelp)
         : [...prev, item]
     );
   };
@@ -156,7 +154,10 @@ const PoItems = () => {
               </thead>
               <tbody className="max-h-80 overflow-y-auto">
                 {poItems.map((item) => (
-                  <tr key={item.id} className="border-b hover:bg-gray-50">
+                  <tr
+                    key={item.code || item.Ebelp}
+                    className="border-b hover:bg-gray-50"
+                  >
                     <td className="px-6 py-4">
                       <input
                         type="checkbox"
@@ -164,6 +165,7 @@ const PoItems = () => {
                         checked={selectedItems.some(
                           (selected) => selected.id === item.id
                         )}
+                        className="w-5 h-5 cursor-pointer"
                       />
                     </td>
                     <td className="px-6 py-4">{item.Ebelp}</td>
@@ -201,29 +203,32 @@ const PoItems = () => {
 
           {/* Dropdown - Positioned to the right */}
           {vendor.role === "Ei" && (
-          <div className="absolute w-56 top-16 right-4">
-            <button
-              className="px-4 py-2 w-56 bg-gray-300 text-gray-700 rounded-lg"
-              onClick={toggleDropdown}
-            >
-              Select Approval
-            </button>
-            {dropdownOpen && (
-              <div className="absolute mt-2 w-56 bg-white border rounded-lg shadow-md">
-                {eiData.map((option) => (
-                  <label key={option.id} className="block px-4 py-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={selectedOptions.includes(option.Name1)} // Using Name1 for checkbox label
-                      onChange={() => handleCheckboxChange(option.Name1)} // Use Name1 as the unique value for selection
-                      className="mr-2"
-                    />
-                    {option.Name1} {/* Show Name1 from EI data */}
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
+            <div className="absolute w-56 top-16 right-4">
+              <button
+                className="px-4 py-2 w-56 bg-gray-300 text-gray-700 rounded-lg"
+                onClick={toggleDropdown}
+              >
+                Select Approval
+              </button>
+              {dropdownOpen && (
+                <div className="absolute mt-2 w-56 bg-white border rounded-lg shadow-md">
+                  {eiData.map((option) => (
+                    <label
+                      key={option.id}
+                      className="block px-4 py-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedOptions.includes(option.Name1)} // Using Name1 for checkbox label
+                        onChange={() => handleCheckboxChange(option.Name1)} // Use Name1 as the unique value for selection
+                        className="mr-2"
+                      />
+                      {option.Name1} {/* Show Name1 from EI data */}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>

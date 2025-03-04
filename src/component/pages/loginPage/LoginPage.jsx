@@ -22,6 +22,7 @@ const LoginPage = ({ onLogin }) => {
       console.log("data---------", data);
 
       if (data.message === "Login successful") {
+        localStorage.setItem("token", data.token);
         onLogin({
           id: data.user.id,
           email: values.email,
@@ -32,7 +33,7 @@ const LoginPage = ({ onLogin }) => {
         });
         navigate("/home");
       } else {
-        setErrorMessage("Invalid email or password.");
+        setErrorMessage(data.message || "Invalid email or password.");
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -96,6 +97,7 @@ const LoginPage = ({ onLogin }) => {
                     type="button"
                     onClick={() => setPasswordVisible((prev) => !prev)} // Toggle visibility
                     className="absolute right-3 top-3 text-xl"
+                    aria-label={passwordVisible ? "Hide password" : "Show password"} // Add accessibility
                   >
                     {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Conditional icon */}
                   </button>

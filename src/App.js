@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import LoginPage from "./component/pages/loginPage/LoginPage";
 import Home from "./component/pages/home/Home";
 import ExistingVendor from "./component/pages/existing_vendor/ExistingVendor";
-import AddVendor from "./component/pages/addVendor/AddVendor";
+
+// import AddVendor from "./component/pages/addVendor/AddVendor";
 import VendorPo from "./component/pages/vendor_po/VendorPo";
 import Invoice from "./component/pages/invoice/Invoice";
 import AsnForm from "./component/pages/asn/AsnForm";
@@ -13,6 +14,8 @@ import Ocr from "./component/pages/ocr/Ocr";
 import RegisterEi from "./component/pages/registerEi/RegisterEi";
 import InvoicesTable from "./component/pages/invoice/InvoiceTable";
 import EiDashboard from "./component/pages/registerEi/EiDashboard"; // Import the EiDashboard
+import VendorInvoicesPage from "./component/pages/registerEi/VendorInvoicesPage";
+import Approvers from "./component/pages/Approver/Approver"
 
 // Protected Route Component
 const ProtectedRoute = ({ element, user, roles }) => {
@@ -75,6 +78,26 @@ const App = () => {
               }
             />
             <Route
+              path="/vendor-invoices"
+              element={
+                <ProtectedRoute
+                  element={<VendorInvoicesPage user={user} />}
+                  user={user}
+                  roles={["Ei"]}
+                />
+              }
+            />
+            <Route
+              path="/approverinvoice"
+              element={
+                <ProtectedRoute
+                  element={<Approvers user={user} />}
+                  user={user}
+                  roles={["approver"]}
+                />
+              }
+            />
+            <Route
               path="/existing-vendor"
               element={
                 <ProtectedRoute
@@ -91,6 +114,16 @@ const App = () => {
                   element={<VendorPo user={user} />}
                   user={user}
                   roles={["vendor", "Ei"]}
+                />
+              }
+            />
+            <Route
+              path="/grn"
+              element={
+                <ProtectedRoute
+                  element={<VendorPo user={user} />}
+                  user={user}
+                  roles={["vendor"]}
                 />
               }
             />

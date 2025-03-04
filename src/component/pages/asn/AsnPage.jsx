@@ -5,10 +5,8 @@ import '../../custom css/VendorCard.css';
 
 const AsnPage = ({ user }) => {
     const [asns, setAsns] = useState([]);
-    console.log("basvgdsvnas", asns);
-    
+    const [loading, setLoading] = useState(true); // Track loading state
 
-    // Fetch ASN data from the backend
     useEffect(() => {
         const fetchAsns = async () => {
             try {
@@ -29,11 +27,13 @@ const AsnPage = ({ user }) => {
             } catch (error) {
                 console.error('Error fetching ASNs:', error);
                 setAsns([]);
+            } finally {
+                setLoading(false); // Set loading to false once data is fetched
             }
         };
 
         fetchAsns();
-    }, [user?.id]); // Add user.id as a dependency
+    }, [user?.id]);
 
     const handleDeleteAsn = async (id) => {
         try {
@@ -55,16 +55,25 @@ const AsnPage = ({ user }) => {
                 <h1 className="text-4xl font-bold text-center text-[#3B71CA] mb-8">
                     Advance Shipping Notices
                 </h1>
-                <div className="flex flex-wrap justify-center gap-6">
-                    {asns.map((asn) => (
-                        <AsnCard
-                            key={asn.id}
-                            asn={asn}
-                            onClick={() => handleCardClick(asn)}
-                            onDelete={() => handleDeleteAsn(asn.id)}
-                        />
-                    ))}
-                </div>
+
+                {loading ? (
+                    <p className="text-center text-gray-500">Loading...</p>
+                ) : asns.length === 0 ? (
+                    <p className="text-center text-gray-500 text-lg font-semibold">
+                        No ASN created yet.
+                    </p>
+                ) : (
+                    <div className="flex flex-wrap justify-center gap-6">
+                        {asns.map((asn) => (
+                            <AsnCard
+                                key={asn.id}
+                                asn={asn}
+                                onClick={() => handleCardClick(asn)}
+                                onDelete={() => handleDeleteAsn(asn.id)}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

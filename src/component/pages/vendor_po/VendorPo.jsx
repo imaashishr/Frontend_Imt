@@ -76,20 +76,18 @@ const PoPage = ({ user }) => {
           <h1 className="text-4xl font-bold text-center text-[#3B71CA] mb-8">
             Purchase Orders
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid ml-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {poData.map((po, index) => (
               <div
                 key={index}
-                className="group bg-white shadow-xl rounded-lg p-6 cursor-pointer transform transition-transform hover:scale-105 relative"
+                className="group bg-white shadow-xl rounded-lg p-4 cursor-pointer transform transition-transform hover:scale-105 relative"
                 onClick={() => handleCardClick(po)}
               >
-                <h3 className="text-xl font-semibold text-blue-600 mb-3">{po.Ebeln}</h3>
+                <h3 className="text-xl font-semibold text-blue-600 mb-3">Purchase Order: {po.Ebeln}</h3>
                 <p className="text-gray-700 mb-2">
-                  <strong>Vendor Code</strong> {po.Lifnr}
+                  <strong>Vendor Code:</strong> {po.Lifnr}
                 </p>
-                <p className="text-gray-700 mb-2">
-                  <strong>Status: Pending</strong> {po.status}
-                </p>
+                
               </div>
             ))}
           </div>

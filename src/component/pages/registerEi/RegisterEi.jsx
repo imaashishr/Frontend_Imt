@@ -48,7 +48,7 @@ const RegisterEi = ({ user }) => {
       <div className="flex-1 flex justify-center items-center min-h-screen bg-gray-100">
         <div className="w-full max-w-3xl bg-white p-8 shadow-lg rounded-lg">
           <h1 className="text-3xl font-bold text-center text-[#3B71CA] mb-6">
-            Register EI/USER
+            Register Users
           </h1>
 
           <Formik
@@ -76,7 +76,7 @@ const RegisterEi = ({ user }) => {
                     id="SapId"
                     name="SapId"
                     type="text"
-                    placeholder="SAP ID"
+                    placeholder="USER ID"
                     value={values.SapId}
                     onChange={(e) => setFieldValue("SapId", e.target.value)}
                     isError={errors.SapId && touched.SapId}
@@ -115,9 +115,9 @@ const RegisterEi = ({ user }) => {
                       setFieldValue("Dept", selectedValue);
                     }}
                     options={[
-                      { label: "Finance", value: "Finance" },
-                      { label: "Transporter", value: "Transporter" },
-                      { label: "HR", value: "HR" },
+                      { label: "Vendor", value: "Vendor" },
+                      { label: "ECI", value: "ECI" },
+                      { label: "APPROVER", value: "APPROVER" },
                     ]}
                     isError={errors.Dept && touched.Dept}
                     errorMessage={errors.Dept}

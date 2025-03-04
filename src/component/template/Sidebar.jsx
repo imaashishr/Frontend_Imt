@@ -1,26 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faPlus, faShoppingCart,faClockRotateLeft, faTruck, faFileInvoice, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faPlus, faShoppingCart, faClockRotateLeft, faTruck, faFileInvoice, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ user }) => {
   console.log("User in Sidebar:", user);
   console.log("User Role:", user?.role);
-  console.log("Vendor ID:", user?.id);
+  console.log("User ID:", user?.id);
 
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Sidebar items, filter them based on the user's role
   const items = [
-    { label: "Home", path: "/home", icon: faHome, roles: ["vendor", "admin"] },
-    { label: "Register Ei", path: "/register-ei", icon: faPlus, roles: ["admin"] },
+    { label: "Home", path: "/home", icon: faHome, roles: ["vendor", "admin", "approver"] },
+    { label: "OCR", path: "/ocr", icon: faEye, roles: ["vendor"] },
+    { label: "GRN", path: "/grn", icon: faTruck, roles: ["vendor"] },
+    { label: "Register User", path: "/register-ei", icon: faPlus, roles: ["admin"] },
     { label: "PO", path: "/vendor-po", icon: faShoppingCart, roles: ["vendor"] },
     { label: "ASN", path: "/asn", icon: faTruck, roles: ["vendor"] },
     { label: "Invoice", path: "/invoice", icon: faFileInvoice, roles: ["vendor"] },
-    { label: "EI Dashboard", path: "/ei-dashboard", icon: faHome, roles: ["Ei"] },  // Link to EI Dashboard
-    
+    { label: "EIC Dashboard", path: `/invoices/${user?.id}`, icon: faHome, roles: ["Ei"] },
     { label: "Invoice History", path: `/invoices/${user?.id}`, icon: faClockRotateLeft, roles: ["vendor"] },
-    { label: "OCR", path: "/ocr", icon: faEye, roles: ["vendor"] },
+   
+    { label: "Vendor Invoices", path: "/vendor-invoices", icon: faEye, roles: ["Ei"] },
+    
+
+
+    { label: "Invoices", path: `/approverinvoice`, icon: faFileInvoice, roles: ["approver"] },
+   
   ];
 
   // Filter the sidebar items based on the user's role
